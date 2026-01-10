@@ -5,6 +5,7 @@ const productRouter=require('./routes/product.routes');
 app.use(cookieparser());
 app.use(express.json());
 
+app.use('/api/product/',productRouter);
 
 
 
