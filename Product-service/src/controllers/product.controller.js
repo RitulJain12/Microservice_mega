@@ -3,7 +3,8 @@ const productModel=require('../models/product.model');
 const { uploadImage } = require('../service/imagekit.service');
 
 async function createProduct(req,res){
-try{
+try{     
+        let {stock}=req.body;
         const {title,description,priceAmount,priceCurrency='INR'}=req.body;
         if(!title || !description || (priceAmount===undefined)){
             return res.status(400).json({message:"Missing required fields"});
@@ -32,13 +33,13 @@ try{
             }));
             uploads.forEach(u=>images.push(u));
         }
-
+         stock = stock !== undefined ? Number(stock) : 0;
         const product = await productModel.create({
             title,
             description,
             price,
             seller,
-            images
+            images,stock
         });
 
         return res.status(201).json({message:'Product created',product});
@@ -162,12 +163,41 @@ async function getProductsBySeller(req,res){
     }
 }
 
+async function decreaseStockForProducts(req,res){
+    const {items}=req.body;
+    console.log(items);
+    const token=req.headers['authorization'];
+    if(!token){
+        return res.status(401).json({message:'Unauthorized: No token provided'});
+    }
+      console.log(items);
+    if(!Array.isArray(items) || items.length===0){
+        return res.status(400).json({message:'Invalid items array'});
+    }
+    try{    
+       const bulkOps=items.map(item=>({
+            updateOne:{
+                filter:{_id:item.productId,'stock':{$gte:item.quantity}},
+                update:{$inc:{stock:-item.quantity}}
+            }
+       }));
+         const result=await productModel.bulkWrite(bulkOps);
+        return res.status(200).json({message:'Stock decreased successfully',modifiedCount:result.modifiedCount});
+
+    }
+    catch(err){
+        console.error('decreaseStockForProducts error',err);
+        return res.status(500).json({message:'Internal Server Error'});
+    }   
+}
+
 module.exports={
     createProduct,
     getAllProducts,
     getProductById,
     updateProduct,
     deleteProduct,
-    getProductsBySeller
+    getProductsBySeller,
+    decreaseStockForProducts
 
 };
