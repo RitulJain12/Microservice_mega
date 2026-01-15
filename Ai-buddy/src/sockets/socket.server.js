@@ -2,7 +2,26 @@ const {Server}=require('socket.io');
 const cookie=require('cookie');
 const jwt=require('jsonwebtoken');
 const agent=require('../ai-agents/agent');
-const {HumanMessage}=require('@langchain/core/messages')
+const {HumanMessage,SystemMessage}=require('@langchain/core/messages')
+// const systemInstruction = new SystemMessage(`
+//   You are a shopping assistant.
+  
+//   RULES (STRICT):
+//   1. When adding a product to cart:
+//      - First call searchProduct with the user query.
+//      - searchProduct returns an object with:
+//        {
+//          products: [
+//            { productId, name, price }
+//          ]
+//        }
+//      - Take 69633bc28cfc1804514e65e2 EXACTLY.
+//      - Pass that value to addProductToCart.
+//   2. NEVER invent or hardcode productId.
+//   3. NEVER pass placeholder text as productId.
+//   `);
+  
+  
 async function InitSocketServer(httpserver){
     const io=new Server(httpserver,
     {
@@ -32,6 +51,7 @@ async function InitSocketServer(httpserver){
                const result = await agent.invoke(
                 {
                   messages: [
+                    //systemInstruction,
                     new HumanMessage(data)
                   ]
                 },
@@ -42,7 +62,7 @@ async function InitSocketServer(httpserver){
                 }
               );
               
-                console.log(result);
+                console.log(`resultt:${result}`);
          });
        
     });

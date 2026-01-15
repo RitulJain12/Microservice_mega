@@ -54,6 +54,7 @@ try{
 async function getAllProducts(req,res){
     const {q,minprice,maxprice,skip=0,limit=20}=req.query;
      const filter={};
+     console.log(`q:${q}`);
     if(q){
         filter.$text={$search:q};
     }
@@ -66,6 +67,7 @@ async function getAllProducts(req,res){
     }
 
     const products=await productModel.find(filter).skip(Number(skip)).limit(Math.min(Number(limit),20));
+    console.log(`ye lo${products}`)
     return res.status(200).json({message:'Products fetched successfully',data:products});
 }
 

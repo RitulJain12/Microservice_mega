@@ -23,6 +23,7 @@ async function addItemToCart(req,res){
         }
         
               await cart.save();
+              console.log("itesmmms addesg");
               return res.status(200).json({message:'Item added to cart successfully',cart});
     }    
     catch(error){
