@@ -18,8 +18,8 @@ const orderSchema = new mongoose.Schema({
         zip: { type: String, required: true },
 
      },
-    orderDate: { type: Date, default: Date.now },
-    deliveryDate: { type: Date }
+    orderDate: { type: Date, default: Date.now() },
+    deliveryDate: { type: Date,default : Date.now() + (5 * 24 * 60 * 60 * 1000)}
 });
 
 module.exports = mongoose.model('order', orderSchema);
