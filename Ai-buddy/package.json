@@ -12,10 +12,13 @@
   "license": "ISC",
   "type": "commonjs",
   "dependencies": {
+    "@google/genai": "^1.40.0",
     "@langchain/core": "^1.1.12",
     "@langchain/google-genai": "^2.1.7",
     "@langchain/groq": "^1.0.3",
     "@langchain/langgraph": "^1.0.15",
+    "@langchain/langgraph-checkpoint-redis": "^1.0.2",
+    "@pinecone-database/pinecone": "^7.0.0",
     "axios": "^1.13.2",
     "cookie": "^1.1.1",
     "cookie-parser": "^1.4.7",

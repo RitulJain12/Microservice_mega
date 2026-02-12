@@ -14,6 +14,7 @@ function createAuthMiddleware(role=["user"]){
            return res.status(403).json({message:"Forbidden: Insufficient permissions"});
         }
         req.user=decoded;
+        console.log(" anmsansas  ");
         next();
       }
      catch(err){

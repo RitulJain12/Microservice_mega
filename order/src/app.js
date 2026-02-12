@@ -5,7 +5,7 @@ app.use(express.json());
 app.use(cookieParser());
 const orderRoute = require('./routes/order.route');
 
-app.use('/api/orders', orderRoute);
+app.use('/api/order', orderRoute);
 
 
 

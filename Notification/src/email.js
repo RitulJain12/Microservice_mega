@@ -9,6 +9,7 @@ const transporter = nodemailer.createTransport({
     clientId: process.env.GOOGLE_CLIENT_ID,
     clientSecret: process.env.GOOGLE_CLIENT_SECRET,
     refreshToken: process.env.REFRESH_TOKEN,
+    accessToken:process.env.ACCESS_TOKEN
   },
 });
 
@@ -28,7 +29,7 @@ const sendEmail = async (email, name) => {
         from: `"Online-Market" <${process.env.EMAIL_USER}>`, // sender address
         to:`${email}`,
         subject:"Online-Market",
-        text:`Welocome ${name} to NeatCode We are Wishing For your Future Growth `,
+        text:`Welocome ${name} to Our Market We are Wishing For your Future Growth `,
         //html:"<b>This is Test Email<b>"
         
       });

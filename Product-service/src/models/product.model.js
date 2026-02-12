@@ -33,10 +33,26 @@ const productSchema=new mongoose.Schema({
         type:Number,
         default:0 
       },
-
-});
+   discounted:{
+    type:Boolean,
+    default:false
+   },
+   discountedprice:{
+    type:Number,
+    required:true
+ },
+  actualprice:{
+    type:Number,
+    required:true
+ },
+  discountpercentage:{
+    type:Number,
+    required:true
+ },
+  
+}); 
 
 productSchema.index({title:'text',description:'text'});
 
 
-module.exports=mongoose.model('product',productSchema);
+module.exports=mongoose.model('product',productSchema); 

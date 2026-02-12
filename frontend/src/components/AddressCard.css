@@ -1,0 +1,188 @@
+.address-card {
+    background: rgba(12, 17, 29, 0.7);
+    border: 1px solid rgba(135, 206, 250, 0.2);
+    border-radius: 1rem;
+    padding: 1.5rem;
+    position: relative;
+    backdrop-filter: blur(10px);
+    transition: all 0.3s ease;
+}
+
+.address-card:hover {
+    border-color: rgba(135, 206, 250, 0.4);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgba(135, 206, 250, 0.15);
+}
+
+.address-card.selectable {
+    cursor: pointer;
+    padding-left: 3.5rem;
+}
+
+.address-card.selected {
+    border-color: #87ceeb;
+    background: rgba(135, 206, 250, 0.1);
+    box-shadow: 0 0 20px rgba(135, 206, 250, 0.3);
+}
+
+.address-card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 1rem;
+}
+
+.address-card-radio {
+    position: absolute;
+    left: 1.5rem;
+    top: 1.5rem;
+    width: 1.25rem;
+    height: 1.25rem;
+    cursor: pointer;
+    accent-color: #87ceeb;
+}
+
+.address-card-details {
+    flex: 1;
+}
+
+.address-card-details p {
+    margin: 0.25rem 0;
+    color: rgba(255, 255, 255, 0.8);
+    font-size: 0.95rem;
+}
+
+.address-card-details .address-street {
+    font-weight: 500;
+    color: #fff;
+    font-size: 1rem;
+}
+
+.address-card-actions {
+    display: flex;
+    gap: 0.5rem;
+}
+
+.address-card-btn {
+    padding: 0.5rem 1rem;
+    border: none;
+    border-radius: 0.5rem;
+    font-size: 0.875rem;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    font-weight: 500;
+}
+
+.address-card-edit {
+    background: rgba(135, 206, 250, 0.15);
+    color: #87ceeb;
+    border: 1px solid rgba(135, 206, 250, 0.3);
+}
+
+.address-card-edit:hover {
+    background: rgba(135, 206, 250, 0.25);
+    border-color: #87ceeb;
+}
+
+.address-card-delete {
+    background: rgba(255, 99, 71, 0.15);
+    color: #ff6347;
+    border: 1px solid rgba(255, 99, 71, 0.3);
+}
+
+.address-card-delete:hover {
+    background: rgba(255, 99, 71, 0.25);
+    border-color: #ff6347;
+}
+
+/* Edit Mode */
+.address-edit-form {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.address-edit-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+}
+
+.address-edit-form input {
+    width: 100%;
+    padding: 0.75rem;
+    background: rgba(12, 17, 29, 0.5);
+    border: 1px solid rgba(135, 206, 250, 0.2);
+    border-radius: 0.5rem;
+    color: #fff;
+    font-size: 0.95rem;
+    transition: all 0.2s ease;
+}
+
+.address-edit-form input:focus {
+    outline: none;
+    border-color: #87ceeb;
+    box-shadow: 0 0 0 3px rgba(135, 206, 250, 0.1);
+}
+
+.address-edit-actions {
+    display: flex;
+    gap: 0.75rem;
+    justify-content: flex-end;
+    margin-top: 0.5rem;
+}
+
+.address-save-btn {
+    padding: 0.75rem 1.5rem;
+    background: linear-gradient(135deg, #87ceeb 0%, #4682b4 100%);
+    color: #fff;
+    border: none;
+    border-radius: 0.5rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.address-save-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(135, 206, 250, 0.4);
+}
+
+.address-cancel-btn {
+    padding: 0.75rem 1.5rem;
+    background: rgba(255, 255, 255, 0.05);
+    color: rgba(255, 255, 255, 0.7);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 0.5rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.address-cancel-btn:hover {
+    background: rgba(255, 255, 255, 0.1);
+    color: #fff;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .address-edit-row {
+        grid-template-columns: 1fr;
+    }
+    
+    .address-card {
+        padding: 1rem;
+    }
+    
+    .address-card.selectable {
+        padding-left: 3rem;
+    }
+    
+    .address-card-actions {
+        flex-direction: column;
+    }
+    
+    .address-card-btn {
+        width: 100%;
+    }
+}

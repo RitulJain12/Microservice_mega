@@ -1,43 +1,46 @@
-const express = require('express');
-const { sign } = require('jsonwebtoken');
-const mongoose = require('mongoose');
+const  mongoose = require('mongoose');
 
 const paymentSchema = new mongoose.Schema({
 
-    order:{
+    order: {
         type: mongoose.Schema.Types.ObjectId,
-        required: true
+        required: false
     },
-    price:{
-         amount:{
+    type: {
+        type: String,
+        enum: ['ORDER', 'PREMIUM'],
+        default: 'ORDER'
+    },
+    days: {
+        type: Number
+    },
+    price: {
+        amount: {
             type: Number,
             required: true
-            },
-            currency:{  
-                type: String,
-                required: true,
-                enum: ['INR', 'USD'],
-                default: 'INR'
-            }
+        },
+        currency: {
+            type: String,
+            required: true,
+            enum: ['INR', 'USD'],
+            default: 'INR'
+        }
     },
-    paymentId:{
-        type: String,
-        required: true  },
-    status:{
+    status: {
         type: String,
         enum: ['Pending', 'Completed', 'Failed'],
         default: 'Pending',
-        
+
     },
-    paymentId:{
+    paymentId: {
         type: String,
         required: true
     },
-    signature:{
+    signature: {
         type: String
     },
 
-    user:{
+    user: {
         type: mongoose.Schema.Types.ObjectId,
         required: true
     }

@@ -1,14 +1,15 @@
-const express=require('express');
-const app=express();
-const cookieParser=require('cookie-parser');
-const authRouter=require('./routes/authroute')
+const express = require('express');
+const app = express();
+const cookieParser = require('cookie-parser');
+const authRouter = require('./routes/authroute')
+const refreshcontroller=require('./controllers/refresh-controller')
+
+// MiddleWares
 app.use(express.json());
 app.use(cookieParser());
 
-// simple register endpoint for tests
+//Routes
+app.use('/auth', authRouter);
+app.use('/refresh',refreshcontroller);
 
-
-app.use('/auth',authRouter);
-
-
-module.exports=app;
+module.exports = app;  

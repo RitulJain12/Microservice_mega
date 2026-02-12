@@ -1,72 +1,74 @@
-const {Server}=require('socket.io');
-const cookie=require('cookie');
-const jwt=require('jsonwebtoken');
-const agent=require('../ai-agents/agent');
-const {HumanMessage,SystemMessage}=require('@langchain/core/messages')
-// const systemInstruction = new SystemMessage(`
-//   You are a shopping assistant.
-  
-//   RULES (STRICT):
-//   1. When adding a product to cart:
-//      - First call searchProduct with the user query.
-//      - searchProduct returns an object with:
-//        {
-//          products: [
-//            { productId, name, price }
-//          ]
-//        }
-//      - Take 69633bc28cfc1804514e65e2 EXACTLY.
-//      - Pass that value to addProductToCart.
-//   2. NEVER invent or hardcode productId.
-//   3. NEVER pass placeholder text as productId.
-//   `);
-  
-  
-async function InitSocketServer(httpserver){
-    const io=new Server(httpserver,
+const { Server } = require('socket.io');
+const cookie = require('cookie');
+const jwt = require('jsonwebtoken');
+const agent = require('../tools/agent');
+const { HumanMessage, SystemMessage } = require('@langchain/core/messages');
+const { default: axios } = require('axios');
+
+async function InitSocketServer(httpserver) {
+  const io = new Server(httpserver,
     {
-   //cors
+      cors: {
+        origin: "http://localhost:5173",
+        methods: ["GET", "POST"],
+        credentials: true
+      }
     });
 
-    
-   //middleware
-    io.use((socket,next)=>{
-        const {token}= cookie.parse(socket.handshake.headers?.cookie|| '');
-        if(!token) return next(new Error("Authentication Error"));
-        try{
-            const decoded=jwt.verify(token,process.env.JWT_SECRET)
-            socket.user=decoded;
-            socket.token=token;
-            next();
+
+
+  io.use(async(socket, next) => {
+    const { token } = cookie.parse(socket.handshake.headers?.cookie || '');
+    if (!token) return next(new Error("Authentication Error"));
+    try {
+      const decoded = jwt.verify(token, process.env.JWT_SECRET)
+      socket.user = decoded;
+      socket.token = token;
+      if(socket.user.ispremiumEnd<Date.now()){
+         socket.user.ispremium=false;
+         await axios.get(`http://localhost:3000/auth/users/me/premium`,{
+          headers:{
+            Authorization:`Bearer ${token}`
+          }
+         })
+      }
+      else{
+        socket.user.ispremium=true;
+      }
+      next();
+    }
+    catch (err) {
+      next(new Error("Authentication Error"));
+    }
+  });
+
+  io.on('connection', (socket) => {
+    console.log("a user Connected");
+    socket.on('message', async (data) => {
+      console.log(data);
+      const result = await agent.invoke(
+        {
+          messages: [
+          //  systemInstruction,
+        new SystemMessage(`Please remove all special characters from final ans and give in simple text form and the userpremium value is ${socket.user.ispremium} also make feel user premium by giving some extra information about the product if user is premium user so give actual price and discount price and if user is not premium user so give only price not discount price and also if user is premium user so give some extra information about the product like how much discount he got and how much he saved and if user is not premium user so give only price not discount price and manage short term memory by self by seeing the top 10 messages of states and give the discounted price prcentage only when premium user say to find discouted products lowest products like otherwise give plan response like in your words about product also for non premium user if want to ask about discount tell him/her to first buy the plans you have to convince him/her for it by showing lots of benefits`),
+        new SystemMessage(`tell about dicount,percentage only if user asks about it do not mention it any normal `),
+        new HumanMessage(data.message)
+          ]
+        },
+        {
+          metadata: {
+            token: socket.token
+          },
+          
         }
-        catch(err){
-            next(new Error("Authentication Error"));
-        }
-    });
-    // 
-    io.on('connection',(socket)=>{
-         console.log("a user Connected");
-         socket.on('message',async(data)=>{
-               console.log(data);
-               const result = await agent.invoke(
-                {
-                  messages: [
-                    //systemInstruction,
-                    new HumanMessage(data)
-                  ]
-                },
-                {
-                  metadata: {
-                    token: socket.token
-                  }
-                }
-              );
-              
-                console.log(`resultt:${result}`);
-         });
-       
-    });
+      );
+      const ans = result.messages[result.messages.length-1]
+      console.log(`resultt:${ans.content}`);
+      socket.emit('message-response', ans.content);
+    }); 
+
+  });
 
 }
 
-module.exports=InitSocketServer;
+module.exports = InitSocketServer; 

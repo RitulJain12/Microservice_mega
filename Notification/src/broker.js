@@ -34,7 +34,7 @@ async function subscribeToQueue(queuename,callback) {
             const data=JSON.parse(msg.content.toString());
             await callback(data);
             channel.ack(msg);
-        }
+        } 
     })
     
 }

@@ -33,9 +33,20 @@ role:{
 },
 addresses:[
     addressesSchema
-]
+],
+refreshtoken:{
+    type:String,
+    select:false
+},
+ispremium:{
+    type:Boolean,
+    default: false
+},
+premiumEndDate:{
+    type:Date,
+}
 
-})
+},{timestamps:true})
 
 
 const userModel=mongoose.model('user',UserSchema);

@@ -1,0 +1,122 @@
+/* HomePage Styles */
+
+.home-hero {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem 1rem;
+    position: relative;
+}
+
+.home-hero-content {
+    max-width: 72rem;
+    margin: 0 auto;
+    text-align: center;
+    z-index: 1;
+}
+
+.home-logo-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.75rem;
+    margin-bottom: 2rem;
+}
+
+.home-logo-icon {
+    color: var(--emerald-500);
+    animation: pulse 2s ease-in-out infinite;
+}
+
+@keyframes pulse {
+
+    0%,
+    100% {
+        opacity: 1;
+        transform: scale(1);
+    }
+
+    50% {
+        opacity: 0.8;
+        transform: scale(1.05);
+    }
+}
+
+.home-title {
+    font-size: clamp(3rem, 8vw, 6rem);
+    font-weight: 900;
+    font-weight: 900;
+    color: white;
+    text-shadow: 0 0 30px rgba(16, 185, 129, 0.2);
+    letter-spacing: -0.02em;
+}
+
+.home-subtitle {
+    font-size: clamp(1.125rem, 2.5vw, 1.5rem);
+    color: rgba(255, 255, 255, 0.8);
+    max-width: 48rem;
+    margin-left: auto;
+    margin-right: auto;
+    line-height: 1.6;
+}
+
+.home-cta-buttons {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    justify-content: center;
+    align-items: center;
+}
+
+@media (min-width: 640px) {
+    .home-cta-buttons {
+        flex-direction: row;
+    }
+}
+
+.home-features {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+    margin-top: 5rem;
+}
+
+@media (min-width: 768px) {
+    .home-features {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+.home-feature-card {
+    background: var(--dark-card);
+    border: 1px solid var(--dark-border);
+    border-radius: 1.5rem;
+    padding: 2rem;
+    text-align: left;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    cursor: pointer;
+}
+
+.home-feature-card:hover {
+    background: #0f0f0f;
+    border-color: var(--emerald-500);
+    box-shadow: 0 12px 40px rgba(16, 185, 129, 0.15);
+    transform: translateY(-8px);
+}
+
+.home-feature-icon {
+    color: var(--emerald-500);
+    margin-bottom: 1.5rem;
+}
+
+.home-feature-title {
+    font-size: 1.25rem;
+    font-weight: 700;
+    margin-bottom: 0.75rem;
+    color: white;
+}
+
+.home-feature-description {
+    color: rgba(255, 255, 255, 0.6);
+    line-height: 1.6;
+}
