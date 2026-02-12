@@ -202,7 +202,7 @@ async function verifyPremiumPayment(req, res) {
       } catch (authError) {
         console.error("Failed to call Auth Service for premium upgrade:", authError.message);
         // Note: Payment is successful but upgrade failed. 
-        // In production, we should have a retry mechanism or alert.
+        // In production, we should have a retry mechanism or alert
         return res.status(200).json({
           message: "Payment successful, but premium activation delayed. Please contact support.",
           paymentId: razorpay_payment_id
