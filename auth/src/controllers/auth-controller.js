@@ -3,6 +3,7 @@ const bcrypt=require('bcryptjs');
 const jwt=require('jsonwebtoken');
 const redis = require('../db/redis');
 require('dotenv').config();
+const RabitMq=require('../service/broker');
 async function registerUSer(req,res) {
     const {username,email,password,fullName:{firstName,lastName},role}=req.body;
     const IsuserAlreadyExits=await userModel.findOne({
@@ -30,6 +31,12 @@ async function registerUSer(req,res) {
         httpOnly:true,
         secure:true,
         maxAge:24*60*60*1000,
+    })
+    RabitMq.publishToQueue('User_Created_Queue',{
+        id:user._id,
+        username:user.username,
+        email:user.email,
+        fullName:user.fullName
     })
     res.status(201).json({message:"User Registered",user:{
         id:user._id,
