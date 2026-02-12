@@ -19,7 +19,7 @@ const { rateLimit } = require('express-rate-limit');
 
 const limiter = rateLimit({
 	windowMs: 2 * 60 * 1000,
-	limit: 4,
+	limit: 30,
 	standardHeaders: 'draft-8',
 	legacyHeaders: false,
 	ipv6Subnet: 56,
