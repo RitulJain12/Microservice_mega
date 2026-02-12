@@ -4,10 +4,10 @@ const cors = require('cors');
 const cartRouter = require('./routes/cart.routes');
 const app = express();
 
-// CORS configuration to allow requests from frontend
+
 app.use(cors({
-    origin: true, // Allow all origins in development
-    credentials: true // Allow cookies to be sent
+    origin: true, 
+    credentials: true 
 }));
 
 app.use(express.json());

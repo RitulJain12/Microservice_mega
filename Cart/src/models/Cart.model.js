@@ -3,12 +3,12 @@ const cartSchema = new mongoose.Schema({
   user: {
     type: mongoose.Schema.Types.ObjectId,
     required: true,
-    unique: true, // One cart per user
+    unique: true, 
   },
   items: [
     {
       productId: {
-        type: String, // Changed to String for easier comparison
+        type: String, 
         required: true,
       },
       quantity: {
@@ -17,7 +17,7 @@ const cartSchema = new mongoose.Schema({
         min: 1,
       },
       images: {
-        type: Array, // Changed to Array to store multiple image objects
+        type: Array, 
         default: []
       },
       title: {
@@ -44,7 +44,6 @@ const cartSchema = new mongoose.Schema({
   timestamps: true,
 });
 
-// Index for faster lookups
 cartSchema.index({ user: 1 });
 
 const CartModel = mongoose.model('cart', cartSchema);
