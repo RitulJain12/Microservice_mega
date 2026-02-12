@@ -15,16 +15,16 @@ app.use(cors({
 app.use(morgan('combined'));
 
 const { createProxyMiddleware } = require('http-proxy-middleware');
-const { rateLimit } = require('express-rate-limit');
+// const { rateLimit } = require('express-rate-limit');
 
-// const limiter = rateLimit({
-// 	windowMs: 2 * 60 * 1000,
-// 	limit: 30,
-// 	standardHeaders: 'draft-8',
-// 	legacyHeaders: false,
-// 	ipv6Subnet: 56,
-// }) 
-// app.use(limiter)
+// // const limiter = rateLimit({
+// // 	windowMs: 2 * 60 * 1000,
+// // 	limit: 30,
+// // 	standardHeaders: 'draft-8',
+// // 	legacyHeaders: false,
+// // 	ipv6Subnet: 56,
+// // }) 
+// // app.use(limiter)
 
 console.log("API Gateway proxy configuration loaded");
 
