@@ -5,7 +5,7 @@ const recommendationRoutes = require('./routes/recommendation.routes');
 const app = express();
 
 app.use(cors({
-    origin: ['http://localhost:5173', 'http://localhost:3010'], // Allow frontend and gateway
+    origin: ['http://localhost:5173', 'http://localhost:3010'], 
     credentials: true
 }));
 app.use(express.json());

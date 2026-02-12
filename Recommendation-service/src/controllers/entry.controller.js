@@ -1,6 +1,5 @@
 const client = require('../db/db');
 
-// Track when a user enters a product page
 exports.trackEntry = async (req, res) => {
     try {
         console.log(`nejejnss`);
@@ -21,7 +20,6 @@ exports.trackEntry = async (req, res) => {
     }
 };
 
-// Track when a user exits a product page
 exports.trackExit = async (req, res) => {
     try {
         console.log(`exxxit`);
