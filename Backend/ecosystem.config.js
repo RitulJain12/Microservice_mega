@@ -6,6 +6,7 @@ module.exports = {
       cwd: './auth',
       watch: false,
       env: {
+        PORT: 3000,
         NODE_ENV: 'production'
       }
     },
@@ -15,6 +16,7 @@ module.exports = {
       cwd: './Product-service',
       watch: false,
       env: {
+        PORT: 3001,
         NODE_ENV: 'production'
       }
     },
@@ -24,6 +26,7 @@ module.exports = {
       cwd: './Cart',
       watch: false,
       env: {
+        PORT: 3002,
         NODE_ENV: 'production'
       }
     },
@@ -33,6 +36,7 @@ module.exports = {
       cwd: './order',
       watch: false,
       env: {
+        PORT: 3003,
         NODE_ENV: 'production'
       }
     },
@@ -42,6 +46,7 @@ module.exports = {
       cwd: './Payment',
       watch: false,
       env: {
+        PORT: 3004,
         NODE_ENV: 'production'
       }
     },
@@ -51,6 +56,7 @@ module.exports = {
       cwd: './Notification',
       watch: false,
       env: {
+        PORT: 3006,
         NODE_ENV: 'production'
       }
     },
@@ -60,6 +66,7 @@ module.exports = {
       cwd: './Recommendation-service',
       watch: false,
       env: {
+        PORT: 3009,
         NODE_ENV: 'production'
       }
     },
@@ -69,6 +76,7 @@ module.exports = {
       cwd: './Seller',
       watch: false,
       env: {
+        PORT: 3008,
         NODE_ENV: 'production'
       }
     },
@@ -78,6 +86,7 @@ module.exports = {
       cwd: './Ai-buddy',
       watch: false,
       env: {
+        PORT: 3005,
         NODE_ENV: 'production'
       }
     },
@@ -87,6 +96,7 @@ module.exports = {
       cwd: './apigateway',
       watch: false,
       env: {
+        // Do NOT set PORT here so it inherits the system PORT (e.g. 10000) assigned by Render.
         NODE_ENV: 'production'
       }
     }
