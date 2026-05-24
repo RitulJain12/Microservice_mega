@@ -2,7 +2,7 @@ module.exports = {
   apps: [
     {
       name: 'auth',
-      script: 'server.js',
+      script: 'Server.js',
       cwd: './auth',
       watch: false,
       env: {
