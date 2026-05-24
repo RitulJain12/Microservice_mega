@@ -1,6 +1,6 @@
 require('dotenv').config();
 const Imagekit=require('imagekit');
-const {v4:uuidv4}=require('uuid');
+const crypto = require('crypto');
 const imagekit=new Imagekit({
     publicKey:process.env.IMAGEKIT_PUBLIC_KEY,
     privateKey:process.env.IMAGEKIT_PRIVATE_KEY,
@@ -10,7 +10,7 @@ const imagekit=new Imagekit({
 async function uploadImage(fileBuffer){
    const res=await imagekit.upload({
         file:fileBuffer,
-        fileName:uuidv4(),
+        fileName:crypto.randomUUID(),
    });
    return {url:res.url, fileId:res.fileId,thumbnailUrl:res.thumbnailUrl};
 }

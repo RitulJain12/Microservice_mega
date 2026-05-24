@@ -1,11 +1,11 @@
-/* Auth Pages Styles (Login & Register) */
+/* Premium Editorial Auth Pages Styles (Login & Register) */
 
 .auth-container {
     min-height: 100vh;
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: 3rem 1rem;
+    padding: 6rem 2rem;
 }
 
 .auth-wrapper {
@@ -15,29 +15,30 @@
 
 .auth-header {
     text-align: center;
-    margin-bottom: 2.5rem;
+    margin-bottom: 3rem;
 }
 
 .auth-title {
-    font-size: clamp(2rem, 5vw, 2.5rem);
-    font-weight: 800;
-    font-weight: 800;
-    color: var(--emerald-500);
-    text-shadow: 0 0 20px rgba(16, 185, 129, 0.3);
+    font-family: 'Newsreader', Georgia, serif;
+    font-size: clamp(2.5rem, 6vw, 3.25rem);
+    font-weight: 500;
+    color: var(--primary-charcoal);
     margin-bottom: 0.75rem;
 }
 
 .auth-subtitle {
-    color: rgba(255, 255, 255, 0.6);
-    font-size: 1rem;
+    font-family: 'Inter', sans-serif;
+    color: var(--text-secondary);
+    font-size: 0.95rem;
+    line-height: 1.5;
 }
 
 .auth-card {
-    background: var(--dark-card);
-    border: 1px solid var(--dark-border);
-    border-radius: 1.5rem;
-    padding: 2.5rem;
-    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+    background: var(--surface-lowest);
+    border: 1px solid var(--outline-color);
+    border-radius: var(--radius-md);
+    padding: 3rem 2.5rem;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.02);
 }
 
 .auth-form {
@@ -47,12 +48,13 @@
 }
 
 .auth-error {
-    padding: 1rem;
-    background: rgba(239, 68, 68, 0.1);
-    border: 1px solid rgba(239, 68, 68, 0.5);
-    border-radius: 0.75rem;
-    color: #f87171;
-    font-size: 0.875rem;
+    padding: 1rem 1.25rem;
+    background: rgba(198, 79, 56, 0.04);
+    border: 1.5px solid var(--accent-terracotta);
+    border-radius: var(--radius-md);
+    color: var(--accent-terracotta);
+    font-size: 0.85rem;
+    line-height: 1.5;
 }
 
 .auth-input-group {
@@ -62,10 +64,8 @@
 }
 
 .auth-submit-btn {
-    margin-top: 0.5rem;
-    padding: 1rem;
-    font-size: 1.0625rem;
-    font-weight: 600;
+    margin-top: 1rem;
+    width: 100%;
 }
 
 .auth-footer {
@@ -74,18 +74,19 @@
 }
 
 .auth-footer-text {
-    color: rgba(255, 255, 255, 0.6);
-    font-size: 0.9375rem;
+    color: var(--text-secondary);
+    font-size: 0.9rem;
 }
 
 .auth-footer-link {
-    color: var(--emerald-500);
+    color: var(--accent-terracotta);
     text-decoration: none;
+    font-family: 'Space Grotesk', sans-serif;
     font-weight: 600;
     transition: color 0.3s ease;
 }
 
 .auth-footer-link:hover {
-    color: var(--emerald-400);
+    color: var(--accent-terracotta-hover);
     text-decoration: underline;
 }

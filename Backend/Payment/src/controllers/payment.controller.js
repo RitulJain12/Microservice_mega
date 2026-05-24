@@ -19,7 +19,8 @@ async function createPayment(req, res) {
     const orderId = req.params.id;
     //console.log("Creating payment for Order ID:", orderId, "by User ID:", userId);
     const token = req.cookies.token || req.headers['authorization']?.split(' ')[1];
-    const orderResponse = await axios.get(`http://localhost:3003/api/order/${orderId}`, {
+    const orderServiceUrl = process.env.ORDER_SERVICE_URL || 'http://localhost:3003';
+    const orderResponse = await axios.get(`${orderServiceUrl}/api/order/${orderId}`, {
       headers: { 'Authorization': `Bearer ${token}` }
     });
     const orderData = orderResponse.data;
@@ -82,7 +83,9 @@ async function verifyPayment(req, res) {
 
       try {
         const token = req.cookies.token || req.headers['authorization']?.split(' ')[1];
-        const orderResponse = await axios.get(`http://localhost:3003/api/order/${payment.order}`, {
+        const orderServiceUrl = process.env.ORDER_SERVICE_URL || 'http://localhost:3003';
+        const productServiceUrl = process.env.PRODUCT_SERVICE_URL || 'http://localhost:3001';
+        const orderResponse = await axios.get(`${orderServiceUrl}/api/order/${payment.order}`, {
           headers: { 'Authorization': `Bearer ${token}` }
         });
         const orderData = orderResponse.data.order;
@@ -93,7 +96,7 @@ async function verifyPayment(req, res) {
             quantity: item.quantity
           }));
 
-          await axios.post(`http://localhost:3001/api/product/decrease-stock`, { items }, {
+          await axios.post(`${productServiceUrl}/api/product/decrease-stock`, { items }, {
             headers: { 'Authorization': `Bearer ${token}` }
           });
         }

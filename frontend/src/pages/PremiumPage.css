@@ -1,8 +1,8 @@
+/* Premium Subscription Plans Layout */
+
 .premium-page {
     min-height: 100vh;
-    padding: 2rem 1rem;
-    background: #000000;
-    color: white;
+    padding: 8rem 2rem 6rem;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -10,68 +10,68 @@
 
 .premium-header {
     text-align: center;
-    margin-bottom: 4rem;
-    max-width: 800px;
+    margin-bottom: 5rem;
+    max-width: 45rem;
 }
 
 .premium-icon {
-    color: #ffd700;
-    margin-bottom: 1rem;
-    filter: drop-shadow(0 0 10px rgba(255, 215, 0, 0.5));
+    color: var(--accent-terracotta);
+    margin-bottom: 1.5rem;
+    filter: none;
 }
 
 .premium-title {
-    font-size: 3rem;
-    font-weight: 800;
+    font-family: 'Newsreader', Georgia, serif;
+    font-size: clamp(2.5rem, 6vw, 4rem);
+    font-weight: 500;
+    color: var(--primary-charcoal);
     margin-bottom: 1rem;
-    background: linear-gradient(135deg, #ffd700, #ffa500);
-    -webkit-background-clip: text;
-    background-clip: text;
-    -webkit-text-fill-color: transparent;
 }
 
 .premium-subtitle {
-    font-size: 1.25rem;
-    color: #94a3b8;
+    font-size: 1.05rem;
+    color: var(--text-secondary);
+    line-height: 1.6;
 }
 
 .premium-plans-container {
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
-    gap: 2rem;
+    align-items: stretch;
+    gap: 2.5rem;
     width: 100%;
     max-width: 1200px;
 }
 
 .premium-card {
-    background: var(--dark-card);
-    border: 1px solid var(--dark-border);
-    border-radius: 1rem;
-    padding: 2rem;
+    background: var(--surface-lowest);
+    border: 1px solid var(--outline-color);
+    border-radius: var(--radius-md);
+    padding: 3rem 2.25rem;
     width: 100%;
     max-width: 350px;
     display: flex;
     flex-direction: column;
     position: relative;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.01);
 }
 
 .premium-card:hover {
-    transform: translateY(-10px);
-    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
-    border-color: rgba(255, 215, 0, 0.3);
+    transform: translateY(-8px);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.04);
+    border-color: var(--primary-charcoal);
 }
 
 .premium-card.popular {
-    transform: scale(1.05);
-    border: 2px solid #ffd700;
-    background: #0f0f0f;
+    border: 2.25px solid var(--primary-charcoal);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.03);
     z-index: 10;
 }
 
 .premium-card.popular:hover {
-    transform: scale(1.05) translateY(-10px);
+    box-shadow: 0 24px 50px rgba(0, 0, 0, 0.06);
 }
 
 .popular-badge {
@@ -79,64 +79,78 @@
     top: -15px;
     left: 50%;
     transform: translateX(-50%);
-    background: #ffd700;
-    color: #000;
-    padding: 0.5rem 1rem;
-    border-radius: 20px;
-    font-weight: bold;
-    font-size: 0.875rem;
+    background: var(--primary-charcoal);
+    color: white;
+    padding: 0.4rem 1rem;
+    border-radius: var(--radius-sm);
+    font-family: 'Space Grotesk', sans-serif;
+    font-weight: 700;
+    font-size: 0.7rem;
     text-transform: uppercase;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    letter-spacing: 0.1em;
 }
 
 .plan-name {
-    font-size: 1.5rem;
-    font-weight: bold;
-    margin-bottom: 1rem;
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 1.15rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    font-weight: 700;
+    margin-bottom: 1.5rem;
     text-align: center;
-    color: #f1f5f9;
+    color: var(--primary-charcoal);
 }
 
 .plan-price {
     text-align: center;
-    margin-bottom: 2rem;
+    margin-bottom: 2.5rem;
+    border-bottom: 1px solid var(--outline-variant);
+    padding-bottom: 1.5rem;
 }
 
 .currency {
+    font-family: 'Space Grotesk', sans-serif;
     font-size: 1.5rem;
-    vertical-align: top;
-    color: #94a3b8;
+    vertical-align: super;
+    color: var(--text-secondary);
+    font-weight: 600;
 }
 
 .amount {
-    font-size: 3.5rem;
-    font-weight: 800;
-    color: #f8fafc;
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 3.75rem;
+    font-weight: 700;
+    color: var(--primary-charcoal);
+    letter-spacing: -0.03em;
 }
 
 .duration {
-    font-size: 1rem;
-    color: #64748b;
+    font-family: 'Inter', sans-serif;
+    font-size: 0.9rem;
+    color: var(--text-tertiary);
     margin-left: 0.25rem;
 }
 
 .plan-features {
     list-style: none;
     padding: 0;
-    margin: 0 0 2rem 0;
+    margin: 0 0 3rem 0;
     flex-grow: 1;
 }
 
 .plan-features li {
     display: flex;
-    align-items: center;
-    margin-bottom: 1rem;
-    color: #cbd5e1;
+    align-items: flex-start;
+    margin-bottom: 1.25rem;
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+    line-height: 1.4;
 }
 
 .feature-icon {
-    color: #ffd700;
+    color: var(--accent-terracotta);
     margin-right: 0.75rem;
+    margin-top: 0.15rem;
     flex-shrink: 0;
 }
 
@@ -155,6 +169,6 @@
     }
 
     .premium-card.popular:hover {
-        transform: translateY(-10px);
+        transform: translateY(-8px);
     }
 }

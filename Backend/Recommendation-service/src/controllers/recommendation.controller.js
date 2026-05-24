@@ -25,14 +25,19 @@ exports.getRecommendations = async (req, res) => {
 
     console.log(`User ${userId} most viewed product: ${mostViewedProductId}`);
 
-    const productServiceUrl = process.env.PRODUCT_SERVICE_URL ;
+    const productServiceUrl = process.env.PRODUCT_SERVICE_URL || 'http://localhost:3001';
 
-    const response = await axios.get(`http://localhost:3001/api/product/similar/${mostViewedProductId}`);
+    let products = [];
+    try {
+      const response = await axios.get(`${productServiceUrl}/api/product/similar/${mostViewedProductId}`);
+      products = response.data.products || [];
+    } catch (axiosError) {
+      console.warn(`Failed to fetch similar products for product ID ${mostViewedProductId}:`, axiosError.message);
+    }
 
-    console.log(response.data.products)
     res.json({
-      products:response.data.products,
-      message:"success"
+      products,
+      message: "success"
     });
 
   } catch (error) {

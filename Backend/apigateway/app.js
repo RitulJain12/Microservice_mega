@@ -6,7 +6,7 @@ const app = express();
 
 
 app.use(cors({
-	origin: 'http://localhost:5173',
+	origin: process.env.CORS_ORIGIN || 'http://localhost:5173',
 	credentials: true,
 	methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'],
 	allowedHeaders: ['Content-Type', 'Authorization']
@@ -15,86 +15,69 @@ app.use(cors({
 app.use(morgan('combined'));
 
 const { createProxyMiddleware } = require('http-proxy-middleware');
-// const { rateLimit } = require('express-rate-limit');
-
-// // const limiter = rateLimit({
-// // 	windowMs: 2 * 60 * 1000,
-// // 	limit: 30,
-// // 	standardHeaders: 'draft-8',
-// // 	legacyHeaders: false,
-// // 	ipv6Subnet: 56,
-// // }) 
-// // app.use(limiter)
 
 console.log("API Gateway proxy configuration loaded");
 
 const proxyOptions = {
 	changeOrigin: true,
-
-	onProxyRes: function (proxyRes, req, res) {
-
-	}
 };
 
 app.use('/user', createProxyMiddleware({
 	...proxyOptions,
-	target: 'http://localhost:3000',
+	target: process.env.AUTH_SERVICE_URL || 'http://localhost:3000',
 	pathRewrite: { '^/user': '' }
 }));
 
 app.use('/product', createProxyMiddleware({
-	target: 'http://localhost:3001',
-	changeOrigin: true,
+	...proxyOptions,
+	target: process.env.PRODUCT_SERVICE_URL || 'http://localhost:3001',
 	pathRewrite: { '^/product': '' }
 }));
 
 app.use('/cart', createProxyMiddleware({
-	target: 'http://localhost:3002',
-	changeOrigin: true,
+	...proxyOptions,
+	target: process.env.CART_SERVICE_URL || 'http://localhost:3002',
 	pathRewrite: { '^/cart': '' }
 }));
 
 app.use('/order', createProxyMiddleware({
-	target: 'http://localhost:3003',
-	changeOrigin: true,
+	...proxyOptions,
+	target: process.env.ORDER_SERVICE_URL || 'http://localhost:3003',
 	pathRewrite: { '^/order': '' }
 }));
 
 app.use('/payment', createProxyMiddleware({
-	target: 'http://localhost:3004',
-	changeOrigin: true,
+	...proxyOptions,
+	target: process.env.PAYMENT_SERVICE_URL || 'http://localhost:3004',
 	pathRewrite: { '^/payment': '' }
 }));
 
 app.use('/ai-buddy', createProxyMiddleware({
-	target: 'http://localhost:3005',
-	changeOrigin: true,
+	...proxyOptions,
+	target: process.env.AIBUDDY_SERVICE_URL || 'http://localhost:3005',
 	pathRewrite: { '^/ai-buddy': '' }
 }));
 
 app.use('/notification', createProxyMiddleware({
-	target: 'http://localhost:3006',
-	changeOrigin: true,
+	...proxyOptions,
+	target: process.env.NOTIFICATION_SERVICE_URL || 'http://localhost:3006',
 	pathRewrite: { '^/notification': '' }
 }));
 
 app.use('/recommendations', createProxyMiddleware({
 	...proxyOptions,
-	target: 'http://localhost:3009',
+	target: process.env.RECOMMENDATION_SERVICE_URL || 'http://localhost:3009',
 	pathRewrite: { '^/recommendations': '' }
 }));
 
 app.use('/seller', createProxyMiddleware({
-	target: 'http://localhost:3007',
-	changeOrigin: true,
+	...proxyOptions,
+	target: process.env.SELLER_SERVICE_URL || 'http://localhost:3008',
 	pathRewrite: { '^/seller': '' }
 }));
 
-
-
-
-app.listen(process.env.PORT, () => {
-	console.log(`API Gateway is running on port ${process.env.PORT}`);
+app.listen(process.env.PORT || 5000, () => {
+	console.log(`API Gateway is running on port ${process.env.PORT || 5000}`);
 });
 
 

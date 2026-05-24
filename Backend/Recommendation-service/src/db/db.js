@@ -1,13 +1,19 @@
 const { createClient } =require('redis');
+require('dotenv').config();
 
-const client = createClient({
-    username: 'default',
-    password: 'szief0Aex566lhlmEZ6NzHhJUV0G8iRp',
-    socket: {
-        host: 'redis-14132.c301.ap-south-1-1.ec2.cloud.redislabs.com',
-        port: 14132
-    }
-});
+const redisOptions = {};
+if (process.env.REDIS_URL) {
+    redisOptions.url = process.env.REDIS_URL;
+} else {
+    redisOptions.username = process.env.REDIS_USERNAME || 'default';
+    redisOptions.password = process.env.REDIS_PASSWORD;
+    redisOptions.socket = {
+        host: process.env.REDIS_HOST,
+        port: parseInt(process.env.REDIS_PORT)
+    };
+}
+
+const client = createClient(redisOptions);
 
 client.on('error', err => console.log('Redis Client Error', err));
 

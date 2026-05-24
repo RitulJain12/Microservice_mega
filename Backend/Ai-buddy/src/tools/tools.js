@@ -7,8 +7,9 @@ const searchProduct = tool(
   async ({ query }, config) => {
     const token = config.metadata.token;
 
+    const productServiceUrl = process.env.PRODUCT_SERVICE_URL || 'http://localhost:3001';
     const response = await axios.get(
-      `http://localhost:3001/api/product?q=${query}`,
+      `${productServiceUrl}/api/product?q=${query}`,
       {
         headers: {
           Authorization: `Bearer ${token}`,
@@ -32,8 +33,9 @@ const addProductToCart = tool(
   async ({ productId, quantity,stock }, config) => {
     const token = config.metadata.token;
     if(quantity>stock) throw Error('The Quantity Of Product Exceeds the Stock')
+    const cartServiceUrl = process.env.CART_SERVICE_URL || 'http://localhost:3002';
     await axios.post(
-      "http://localhost:3002/api/cart/items",
+      `${cartServiceUrl}/api/cart/items`,
       {
         productId,
         quantity,
@@ -63,8 +65,9 @@ const searchDiscountedProducts=tool(async({query},config)=>{
 
   const token = config.metadata.token;
 
+  const productServiceUrl = process.env.PRODUCT_SERVICE_URL || 'http://localhost:3001';
   const response = await axios.get(
-    `http://localhost:3001/api/product/discounted/?q=${query}`,
+    `${productServiceUrl}/api/product/discounted/?q=${query}`,
     {
       headers: {
         Authorization: `Bearer ${token}`,

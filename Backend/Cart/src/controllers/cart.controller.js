@@ -12,7 +12,8 @@ async function addItemToCart(req, res) {
 
     try {
         // Fetch product details from product service
-        let { product } = (await axios.get(`http://localhost:3001/api/product/${productId}`)).data;
+        const productServiceUrl = process.env.PRODUCT_SERVICE_URL || 'http://localhost:3001';
+        let { product } = (await axios.get(`${productServiceUrl}/api/product/${productId}`)).data;
         console.log('Product fetched:', product.title);
 
         let cart = await cartModel.findOne({ user: userId });

@@ -1,0 +1,181 @@
+version: '3.8'
+
+services:
+  rabbitmq:
+    image: rabbitmq:3-management-alpine
+    container_name: onkart-rabbitmq
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+    environment:
+      - RABBITMQ_DEFAULT_USER=guest
+      - RABBITMQ_DEFAULT_PASS=guest
+
+  mongodb:
+    image: mongo:latest
+    container_name: onkart-mongo
+    ports:
+      - "27017:27017"
+
+  redis:
+    image: redis:alpine
+    container_name: onkart-redis
+    ports:
+      - "6379:6379"
+
+  apigateway:
+    build:
+      context: ./apigateway
+    container_name: onkart-apigateway
+    ports:
+      - "5000:5000"
+    environment:
+      - PORT=5000
+      - RECOMMENDATION_SERVICE_URL=http://recommendation:3009
+      - SELLER_SERVICE_URL=http://seller:5007
+    depends_on:
+      - rabbitmq
+      - mongodb
+      - auth
+      - product
+      - cart
+      - order
+      - payment
+      - aibuddy
+      - notification
+      - recommendation
+      - seller
+
+  auth:
+    build:
+      context: ./auth
+    container_name: onkart-auth
+    ports:
+      - "5001:5001"
+    environment:
+      - PORT=5001
+      - MONGO_URL=mongodb://mongodb:27017/auth_db
+      - RABBIT_URL=amqp://guest:guest@rabbitmq:5672
+      - REDIS_URL=redis://redis:6379
+    depends_on:
+      - mongodb
+      - rabbitmq
+      - redis
+    dns:
+      - 8.8.8.8
+      - 1.1.1.1
+
+  cart:
+    build:
+      context: ./Cart
+    container_name: onkart-cart
+    ports:
+      - "5002:5002"
+    environment:
+      - PORT=5002
+      - MONGO_URL=mongodb://mongodb:27017/cart_db
+    depends_on:
+      - mongodb
+
+  notification:
+    build:
+      context: ./Notification
+    container_name: onkart-notification
+    ports:
+      - "5003:5003"
+    environment:
+      - PORT=5003
+      - RABBIT_URL=amqp://guest:guest@rabbitmq:5672
+    depends_on:
+      - rabbitmq
+    dns:
+      - 8.8.8.8
+      - 1.1.1.1
+
+  payment:
+    build:
+      context: ./Payment
+    container_name: onkart-payment
+    ports:
+      - "5004:5004"
+    environment:
+      - PORT=5004
+      - MONGO_URL=mongodb://mongodb:27017/payment_db
+    depends_on:
+      - mongodb
+
+  product:
+    build:
+      context: ./Product-service
+    container_name: onkart-product
+    ports:
+      - "5005:5005"
+    environment:
+      - PORT=5005
+      - MONGOURL=mongodb://mongodb:27017/product_db
+    depends_on:
+      - mongodb
+    dns:
+      - 8.8.8.8
+      - 1.1.1.1
+
+  recommendation:
+    build:
+      context: ./Recommendation-service
+    container_name: onkart-recommendation
+    ports:
+      - "3009:3009"
+    environment:
+      - PORT=3009
+      - REDIS_URL=redis://redis:6379
+    depends_on:
+      - mongodb
+      - redis
+    dns:
+      - 8.8.8.8
+      - 1.1.1.1
+
+  seller:
+    build:
+      context: ./Seller
+    container_name: onkart-seller
+    ports:
+      - "5007:5007"
+    environment:
+      - PORT=5007
+      - MONGO_URL=mongodb://mongodb:27017/seller_db
+    depends_on:
+      - mongodb
+
+  order:
+    build:
+      context: ./order
+    container_name: onkart-order
+    ports:
+      - "5008:5008"
+    environment:
+      - PORT=5008
+      - MONGO_URL=mongodb://mongodb:27017/order_db
+    depends_on:
+      - mongodb
+
+  aibuddy:
+    build:
+      context: ./Ai-buddy
+    container_name: onkart-aibuddy
+    ports:
+      - "5009:5009"
+    environment:
+      - PORT=5009
+
+  frontend:
+    build:
+      context: ../frontend
+    container_name: onkart-frontend
+    ports:
+      - "5173:5173"
+    environment:
+      - VITE_API_URL=http://apigateway:5000
+      - VITE_SOCKET_URL=ws://notification:5003
+    depends_on:
+      - apigateway

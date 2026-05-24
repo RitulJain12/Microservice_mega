@@ -6,10 +6,12 @@ const { HumanMessage, SystemMessage } = require('@langchain/core/messages');
 const { default: axios } = require('axios');
 
 async function InitSocketServer(httpserver) {
+  const corsOrigin = process.env.CORS_ORIGIN || "http://localhost:5173";
+  const authServiceUrl = process.env.AUTH_SERVICE_URL || "http://localhost:3000";
   const io = new Server(httpserver,
     {
       cors: {
-        origin: "http://localhost:5173",
+        origin: corsOrigin,
         methods: ["GET", "POST"],
         credentials: true
       }
@@ -26,7 +28,7 @@ async function InitSocketServer(httpserver) {
       socket.token = token;
       if(socket.user.ispremiumEnd<Date.now()){
          socket.user.ispremium=false;
-         await axios.get(`http://localhost:3000/auth/users/me/premium`,{
+          await axios.get(`${authServiceUrl}/auth/users/me/premium`,{
           headers:{
             Authorization:`Bearer ${token}`
           }

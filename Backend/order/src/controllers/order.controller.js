@@ -4,15 +4,17 @@ const axios = require('axios');
 async function createOrder(req, res) {
     const user = req.user;
     const token = req.cookies?.token || req.headers?.authorization?.split(' ')[1];
+    const cartServiceUrl = process.env.CART_SERVICE_URL || 'http://localhost:3002';
+    const productServiceUrl = process.env.PRODUCT_SERVICE_URL || 'http://localhost:3001';
     try {
 
-        const cartResponse = await axios.get(`http://localhost:3002/api/cart`, {
+        const cartResponse = await axios.get(`${cartServiceUrl}/api/cart`, {
             headers: { authorization: `Bearer ${token}` }
         });
 
 
         const product = await Promise.all(cartResponse.data.cart.items.map(async (item) => {
-            const productResponse = await axios.get(`http://localhost:3001/api/product/${item.productId}`, {
+            const productResponse = await axios.get(`${productServiceUrl}/api/product/${item.productId}`, {
                 headers: { authorization: `Bearer ${token}` }
             });
             return productResponse.data.product;
@@ -51,7 +53,7 @@ async function createOrder(req, res) {
 
         // Clear the cart after successful order creation
         try {
-            await axios.delete(`http://localhost:3002/api/cart/clear`, {
+            await axios.delete(`${cartServiceUrl}/api/cart/clear`, {
                 headers: { authorization: `Bearer ${token}` }
             });
             console.log('Cart cleared successfully');
@@ -96,7 +98,8 @@ async function getUserOrders(req, res) {
         let productsMap = {};
         if (productIds.length > 0) {
             try {
-                const productResponse = await axios.post('http://localhost:3001/api/product/bulk', { ids: productIds });
+                const productServiceUrl = process.env.PRODUCT_SERVICE_URL || 'http://localhost:3001';
+                const productResponse = await axios.post(`${productServiceUrl}/api/product/bulk`, { ids: productIds });
                 const products = productResponse.data.products || [];
                 console.log("Fetched Products Count:", products.length);
                 products.forEach(p => {
