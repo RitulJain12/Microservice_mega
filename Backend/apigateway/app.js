@@ -28,28 +28,28 @@ app.use('/user', createProxyMiddleware({
 	pathRewrite: { '^/user': '' }
 }));
 
-app.use('/product', createProxyMiddleware({
+app.use('/product/api', createProxyMiddleware({
 	...proxyOptions,
 	target: process.env.PRODUCT_SERVICE_URL || 'http://localhost:3001',
-	pathRewrite: { '^/product': '' }
+	pathRewrite: { '^/product/api': '/api' }
 }));
 
-app.use('/cart', createProxyMiddleware({
+app.use('/cart/api', createProxyMiddleware({
 	...proxyOptions,
 	target: process.env.CART_SERVICE_URL || 'http://localhost:3002',
-	pathRewrite: { '^/cart': '' }
+	pathRewrite: { '^/cart/api': '/api' }
 }));
 
-app.use('/order', createProxyMiddleware({
+app.use('/order/api', createProxyMiddleware({
 	...proxyOptions,
 	target: process.env.ORDER_SERVICE_URL || 'http://localhost:3003',
-	pathRewrite: { '^/order': '' }
+	pathRewrite: { '^/order/api': '/api' }
 }));
 
-app.use('/payment', createProxyMiddleware({
+app.use('/payment/api', createProxyMiddleware({
 	...proxyOptions,
 	target: process.env.PAYMENT_SERVICE_URL || 'http://localhost:3004',
-	pathRewrite: { '^/payment': '' }
+	pathRewrite: { '^/payment/api': '/api' }
 }));
 
 app.use('/ai-buddy', createProxyMiddleware({

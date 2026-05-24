@@ -7,7 +7,8 @@ module.exports = {
       watch: false,
       env: {
         PORT: 3000,
-        NODE_ENV: 'production'
+        NODE_ENV: 'production',
+        MONGO_URL: process.env.AUTH_MONGO_URL
       }
     },
     {
@@ -17,7 +18,8 @@ module.exports = {
       watch: false,
       env: {
         PORT: 3001,
-        NODE_ENV: 'production'
+        NODE_ENV: 'production',
+        MONGOURL: process.env.PRODUCT_MONGO_URL
       }
     },
     {
@@ -27,7 +29,8 @@ module.exports = {
       watch: false,
       env: {
         PORT: 3002,
-        NODE_ENV: 'production'
+        NODE_ENV: 'production',
+        MONGO_URL: process.env.CART_MONGO_URL
       }
     },
     {
@@ -37,7 +40,8 @@ module.exports = {
       watch: false,
       env: {
         PORT: 3003,
-        NODE_ENV: 'production'
+        NODE_ENV: 'production',
+        MONGO_URL: process.env.ORDER_MONGO_URL
       }
     },
     {
@@ -47,7 +51,8 @@ module.exports = {
       watch: false,
       env: {
         PORT: 3004,
-        NODE_ENV: 'production'
+        NODE_ENV: 'production',
+        MONGO_URL: process.env.PAYMENT_MONGO_URL
       }
     },
     {
@@ -77,7 +82,8 @@ module.exports = {
       watch: false,
       env: {
         PORT: 3008,
-        NODE_ENV: 'production'
+        NODE_ENV: 'production',
+        MONGO_URL: process.env.SELLER_MONGO_URL
       }
     },
     {
@@ -87,7 +93,8 @@ module.exports = {
       watch: false,
       env: {
         PORT: 3005,
-        NODE_ENV: 'production'
+        NODE_ENV: 'production',
+        MONGO_URL: process.env.AIBUDDY_MONGO_URL
       }
     },
     {
