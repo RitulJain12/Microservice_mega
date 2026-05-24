@@ -54,6 +54,7 @@ app.use('/payment', createProxyMiddleware({
 
 app.use('/ai-buddy', createProxyMiddleware({
 	...proxyOptions,
+	ws: true,
 	target: process.env.AIBUDDY_SERVICE_URL || 'http://localhost:3005',
 	pathRewrite: { '^/ai-buddy': '' }
 }));
@@ -75,6 +76,12 @@ app.use('/seller', createProxyMiddleware({
 	target: process.env.SELLER_SERVICE_URL || 'http://localhost:3008',
 	pathRewrite: { '^/seller': '' }
 }));
+
+const path = require('path');
+app.use(express.static(path.join(__dirname, '../../frontend/dist')));
+app.get('*', (req, res) => {
+	res.sendFile(path.join(__dirname, '../../frontend/dist/index.html'));
+});
 
 app.listen(process.env.PORT || 5000, () => {
 	console.log(`API Gateway is running on port ${process.env.PORT || 5000}`);

@@ -8,8 +8,13 @@ const useAIBuddy = () => {
     const [isTyping, setIsTyping] = useState(false);
 
     useEffect(() => {
-        // Connect to AI Buddy WebSocket
-        const newSocket = io('http://localhost:3005', {
+        // Connect to AI Buddy WebSocket via API Gateway proxy in production
+        const isLocal = window.location.hostname === 'localhost';
+        const socketUrl = import.meta.env.VITE_SOCKET_URL || (isLocal ? 'http://localhost:3005' : window.location.origin);
+        const socketPath = isLocal ? '/socket.io' : '/ai-buddy/socket.io';
+
+        const newSocket = io(socketUrl, {
+            path: socketPath,
             withCredentials: true,
             transports: ['websocket'],
         });
