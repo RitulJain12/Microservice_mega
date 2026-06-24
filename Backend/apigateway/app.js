@@ -86,6 +86,11 @@ app.use(createProxyMiddleware({
 	pathRewrite: { '^/seller': '' }
 }));
 
+const swaggerUi = require('swagger-ui-express');
+const swaggerSpec = require('./swagger');
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
+
+
 const path = require('path');
 app.use(express.static(path.join(__dirname, '../../frontend/dist')));
 app.get('*wildcard', (req, res) => {
